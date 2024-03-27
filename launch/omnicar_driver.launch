@@ -1,5 +1,6 @@
 <launch> 
     <rosparam command="load" file="$(find omnicar_ros_driver)/config/omnicar.yaml" />  
     
-    <node name="omnicar_driver" pkg="omnicar_ros_driver" type="omnicar_driver" output="screen"></node>
+    <node name="omnicar_driver_node" pkg="omnicar_ros_driver" type="omnicar_driver" output="screen"></node>
+    <node name="range_sensor_node" pkg="omnicar_ros_driver" type="range_sensor_node.py" output="screen"></node>
 </launch>
