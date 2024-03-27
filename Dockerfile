@@ -20,6 +20,9 @@ RUN apt-get update \
         ros-${ROS_DISTRO}-teleop-twist-keyboard \
     && rm -rf /var/lib/apt/lists/* && apt autoremove && apt clean
 
+# Range sensor deps install
+RUN pip3 install git+https://github.com/pimoroni/VL53L0X-python.git
+
 RUN mkdir -p /ros_ws/src && cd /ros_ws \ 
     && catkin config --extend /opt/ros/${ROS_DISTRO} \
     && catkin build && echo "source /ros_ws/devel/setup.bash" >> ~/.bashrc
