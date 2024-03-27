@@ -1,0 +1,5 @@
+<launch> 
+    <rosparam command="load" file="$(find omnicar_ros_driver)/config/omnicar.yaml" />  
+    
+    <node name="omnicar_driver" pkg="omnicar_ros_driver" type="omnicar_driver" output="screen"></node>
+</launch>

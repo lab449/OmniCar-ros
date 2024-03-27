@@ -1,0 +1,18 @@
+version: '3.9'
+name: 'omnicar-driver'
+
+services:
+  driver:
+    image: omnicar-ros-driver
+    container_name: omnicar_ros_driver
+    build:
+      context: ./
+    ipc: host
+    stdin_open: true
+    privileged: true
+    tty: true
+    network_mode: host
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - ./:/ros_ws/src/omnicar_ros_driver
