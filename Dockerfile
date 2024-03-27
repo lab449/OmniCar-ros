@@ -8,7 +8,9 @@ RUN apt-get update &&\
         python3-wstool \
         python3-catkin-tools \
         python3-lxml \
+        python3-pip \
         build-essential \
+        git wget\
     && rm -rf /var/lib/apt/lists/* && apt autoremove && apt clean
 RUN apt-get update \
     && apt-get install -y ros-${ROS_DISTRO}-ros-control \ 
@@ -21,7 +23,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* && apt autoremove && apt clean
 
 # Range sensor deps install
-RUN pip3 install git+https://github.com/pimoroni/VL53L0X-python.git
+
+RUN pip3 install git+https://github.com/pimoroni/VL53L0X-python.git \
+    && pip3 install RPi.GPIO smbus numpy
 
 RUN mkdir -p /ros_ws/src && cd /ros_ws \ 
     && catkin config --extend /opt/ros/${ROS_DISTRO} \

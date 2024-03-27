@@ -16,3 +16,4 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
       - ./:/ros_ws/src/omnicar_ros_driver
+      - ./utils/vl53l1x_ros:/ros_ws/src/vl53l1x_ros

@@ -34,3 +34,6 @@ target_link_libraries(${PROJECT_NAME}
 
 add_executable(omnicar_driver src/main.cpp)
 target_link_libraries(omnicar_driver ${PROJECT_NAME} ${catkin_LIBRARIES})
+
+catkin_install_python(PROGRAMS scripts/range_sensor_node.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
