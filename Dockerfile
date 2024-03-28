@@ -20,12 +20,16 @@ RUN apt-get update \
         ros-${ROS_DISTRO}-position-controllers \ 
         ros-${ROS_DISTRO}-robot-state-publisher \
         ros-${ROS_DISTRO}-teleop-twist-keyboard \
+        ros-${ROS_DISTRO}-camera-info-manager\
+        ros-${ROS_DISTRO}-usb-cam \
     && rm -rf /var/lib/apt/lists/* && apt autoremove && apt clean
 
 # Range sensor deps install
 
 RUN pip3 install git+https://github.com/pimoroni/VL53L0X-python.git \
     && pip3 install RPi.GPIO smbus numpy
+
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
 
 RUN mkdir -p /ros_ws/src && cd /ros_ws \ 
     && catkin config --extend /opt/ros/${ROS_DISTRO} \
@@ -38,5 +42,4 @@ COPY ./ /ros_ws/src/omnicar_ros_driver
 RUN catkin build
 
 HEALTHCHECK --interval=20s --timeout=1s --retries=3 --start-period=20s CMD if [[ $(rostopic list 2> /dev/null | wc -c) > 0 ]]; then exit 0; fi;
-CMD ["/bin/bash", "-ci", "roslaunch omnicar_ros_driver omnicar_driver.launch"]
-
+CMD ["/bin/bash", "-ci", "roslaunch omnicar_ros_driver bringup.launch"]
