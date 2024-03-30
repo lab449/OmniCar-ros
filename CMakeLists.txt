@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
     std_msgs
     tf
     geometry_msgs
+    nav_msgs
 )
 
 catkin_package(

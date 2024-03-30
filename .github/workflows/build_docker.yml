@@ -5,11 +5,14 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
+    tags:
+      - '*'
   pull_request:
     branches: [ "main" ]
  
-jobs:
-  build-with-docker:
+jobs:  
+  build-with-docker_tag:
+    if: github.event_name == 'tag'
     name: Build multi-platform Docker image
     runs-on: ubuntu-20.04
     steps:
@@ -25,6 +28,6 @@ jobs:
           context: .
           platforms: linux/arm64/v8
           push: true
-          tags: lab449/omnicar:latest
+          tags: lab449/omnicar:${{ github.ref_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

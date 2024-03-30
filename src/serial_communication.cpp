@@ -30,8 +30,8 @@ void SerialCommunication::handleSerial()
     int bytesSent = 0;
     int bytesRead = 0;
 
-    const int bufferSize = robotState.jointsPosition.rows()*sizeof(float)+robotState.jointsVelocity.rows()*sizeof(float)+2;
-    float stateVector[robotState.jointsPosition.rows()+robotState.jointsVelocity.rows()] = {0};
+    const int bufferSize = (robotState.jointsPosition.rows()+robotState.jointsVelocity.rows() + robotState.odomPose.rows())*sizeof(float)+2;
+    float stateVector[robotState.jointsPosition.rows()+robotState.jointsVelocity.rows() + robotState.odomPose.rows()] = {0};
     char buffer[bufferSize] = {0};
     uint8_t readChecksum;
     uint8_t calcChecksum;
@@ -68,6 +68,7 @@ void SerialCommunication::handleSerial()
                 std::unique_lock<std::mutex> lock(mutexState);
                 memcpy(robotState.jointsPosition.data(), stateVector, robotState.jointsPosition.rows()*sizeof(float));
                 memcpy(robotState.jointsVelocity.data(), &(stateVector[robotState.jointsPosition.rows()]), robotState.jointsVelocity.rows()*sizeof(float));
+                memcpy(robotState.odomPose.data(), &(stateVector[robotState.jointsPosition.rows() + robotState.jointsVelocity.rows()]), robotState.odomPose.rows()*sizeof(float));
                 // printf("Got joint angles [%f, %f, %f, %f] \n", robotState.jointsPosition[0], robotState.jointsPosition[1], robotState.jointsPosition[2], robotState.jointsPosition[3]);
                 // printf("Got joint velocities [%f, %f, %f, %f]\n", robotState.jointsVelocity[0], robotState.jointsVelocity[1], robotState.jointsVelocity[2], robotState.jointsVelocity[3]);
             }
