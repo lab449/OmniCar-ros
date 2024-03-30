@@ -4,15 +4,15 @@ name: Build multi-platform Docker image
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ "odom" ]
     tags:
       - '*'
   pull_request:
-    branches: [ "main" ]
+    branches: [ "odom" ]
  
 jobs:  
   build-with-docker_tag:
-    if: github.event_name == 'tag'
+    if: github.event_name == 'push'
     name: Build multi-platform Docker image
     runs-on: ubuntu-20.04
     steps:
